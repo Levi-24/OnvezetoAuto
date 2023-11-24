@@ -24,7 +24,13 @@ namespace Onvezeto_Major_Levente
             this.SAESzint = d[1];
             this.aktualisSebesseg = int.Parse(d[2]);
             this.szenzorokListaja = d[3].Split(",");
-            //this.GPSKoordinatak = d[4].Split("|");
+
+            //string[] parts = d[4].Split("|");
+            //for (int i = 0; i < parts.Length; i++)
+            //{
+            //    this.GPSKoordinatak = double.Parse(parts[i]);
+            //}
+
             this.vezetoiBeavatkozas = int.Parse(d[5]);
             this.aktualisVezetesiMod = d[6];
             this.id = x;
