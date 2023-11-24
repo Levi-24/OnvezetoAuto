@@ -90,6 +90,10 @@ namespace Onvezeto_Major_Levente
             }
             return onallo;
         }
+        //static double fealdat9(List<Auto> autok)
+        //{
+        //    return autok.Min(x => x.GPSKoordinatak);
+        //}
         static List<string> feladat10(List<Auto> autok)
         {
             List<Auto> automata = new List<Auto>();
