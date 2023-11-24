@@ -115,7 +115,7 @@ namespace Onvezeto_Major_Levente
             foreach (var auto in autok)
             {
                 szenzor = auto.szenzorokListaja.Count();
-                if (auto.aktualisSebesseg > 85 && auto.aktualisSebesseg < 95 && szenzor >= 3)
+                if (szenzor >= 3 && auto.aktualisSebesseg >= 85 &&auto.aktualisSebesseg <= 95)
                 {
                     result += auto.id + ", ";
                 }

@@ -15,7 +15,6 @@ namespace Onvezeto_Major_Levente
         public double[] GPSKoordinatak { get; set; }
         public int vezetoiBeavatkozas { get; set; }
         public string aktualisVezetesiMod { get; set; }
-
         public int id { get; set; }
 
         public Auto(string s, int x)
@@ -31,6 +30,7 @@ namespace Onvezeto_Major_Levente
             this.id = x;
         }
 
+        //12.Feladat
         public string nagybetu()
         {
             return gyartoModell.ToUpper();
