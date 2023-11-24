@@ -10,7 +10,45 @@ namespace Onvezeto_Major_Levente
     {
         public string gyartoModell { get; set; }
         public string SAESzint { get; set; }
-        public int aktulaisSebesseg { get; set; }
-        public int MyProperty { get; set; }
+        public int aktualisSebesseg { get; set; }
+        public string[] szenzorokListaja { get; set; }
+        public double[] GPSKoordinatak { get; set; }
+        public int vezetoiBeavatkozas { get; set; }
+        public string aktualisVezetesiMod { get; set; }
+
+        public int id { get; set; }
+
+        public Auto(string s, int x)
+        {
+            var d = s.Split("; ");
+            this.gyartoModell = d[0];
+            this.SAESzint = d[1];
+            this.aktualisSebesseg = int.Parse(d[2]);
+            this.szenzorokListaja = d[3].Split(",");
+            //this.GPSKoordinatak = d[4].Split("|");
+            this.vezetoiBeavatkozas = int.Parse(d[5]);
+            this.aktualisVezetesiMod = d[6];
+            this.id = x;
+        }
+
+        public string nagybetu()
+        {
+            return gyartoModell.ToUpper();
+        }
+
+        public override string ToString()
+        {
+            string szenzorok = "";
+            for (int i = 0; i < szenzorokListaja.Length; i++)
+            {
+                szenzorok += szenzorokListaja[i] + ",";
+            }
+            string gps = "";
+            //for (int y = 0; y < GPSKoordinatak.Length; y++)
+            //{
+            //    gps += GPSKoordinatak[y] + ",";
+            ////}
+            return $"Gyártó és modell: {gyartoModell}, SAE szint: {SAESzint}, Aktuális sebesség: {aktualisSebesseg}, Szenzorok listája: {szenzorok}, GPS koordináták: {gps}, Vezetői beavatkozás: {vezetoiBeavatkozas}, Aktuális vezetési mód: {aktualisVezetesiMod};";
+        }
     }
 }
