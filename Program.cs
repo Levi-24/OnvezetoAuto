@@ -20,113 +20,100 @@ namespace Onvezeto_Major_Levente
                 x++;
             }
 
-            List<Auto> felautomata = f7(autok);
-            int felauto = felautomata.Count;
-            if (felauto > 0)
-            {
-                Console.Write("7.Feladat: ");
-                Console.WriteLine(felauto);
-            }
-            else
-            {
-                Console.WriteLine("Nincsen ilyen autó!");
-            }
-
-            List<Auto> f8 = feladat8(autok);
-            Console.WriteLine("8.Feladat:");
-            foreach (var auto in f8)
+            //Kiírás
+            foreach (var auto in autok)
             {
                 Console.WriteLine(auto);
+                Console.WriteLine();
             }
-            Console.WriteLine(f8.Count);
-            Console.WriteLine(f8.Max(m => m.vezetoiBeavatkozas));
 
+            //7.Feladat
+            List<Auto> felautomata = f7(autok);
+            int felauto = felautomata.Count;
+            Console.Write("7.Feladat: ");
+            if (felauto > 0) Console.WriteLine(felauto);
+            else Console.WriteLine("Nincsen ilyen autó!");
+            Console.WriteLine();
+
+            //8.Feladat
+            List<Auto> feladat8 = f8(autok);
+            Console.WriteLine("8.Feladat:");
+            foreach (var auto in feladat8) Console.WriteLine(auto);
+            Console.WriteLine("Autók száma:");
+            Console.WriteLine(feladat8.Count);
+            Console.WriteLine("Legnagyobb érték:");
+            Console.WriteLine(feladat8.Max(m => m.vezetoiBeavatkozas));
+            Console.WriteLine();
+
+            //9.Feladat
             Console.WriteLine("9.Feladat:");
+            Console.WriteLine(f9(autok));
+            Console.WriteLine();
 
-            List<string> gyartok = feladat10(autok);
+            //10.Feladat
             Console.WriteLine("10.Feladat:");
+            List<string> gyartok = f10(autok);
             if (gyartok.Count > 0)
             {
-                gyartok.Sort();
-                gyartok.Distinct();
-                foreach (var item in gyartok)
-                {
-                    Console.WriteLine(item);
-                }
+                foreach (var gyarto in gyartok) Console.WriteLine(gyarto);
             }
-            else
-            {
-                Console.WriteLine("Nincs ilyen gyártó!");
-            }
+            else Console.WriteLine("Nincs ilyen gyártó!");
+            Console.WriteLine();
 
+            //11.Feladat
             Console.WriteLine("11.Feladat:");
-            Console.WriteLine(feladat11(autok));
+            Console.WriteLine(f11(autok));
 
-            feladat13(autok);
+            //13.Feladat
+            f13(autok);
         }
 
         static List<Auto> f7(List<Auto> autok)
         {
-            List<Auto> fel = new List<Auto>();
-            foreach (var auto in autok)
-            {
-                if (auto.SAESzint == "félautomatikus" && auto.aktualisVezetesiMod == "manuális")
-                {
-                    fel.Add(auto);
-                }
-            }
-            return fel;
+            return autok.Where(x => x.SAESzint == "félautomatikus" && x.aktualisVezetesiMod == "manuális").ToList();
         }
-        static List<Auto> feladat8(List<Auto> autok)
+        static List<Auto> f8(List<Auto> autok)
         {
-            List<Auto> onallo = new List<Auto>();
             int max = autok.Max(m => m.vezetoiBeavatkozas);
-            foreach (var auto in autok)
-            {
-                if (auto.vezetoiBeavatkozas == max)
-                {
-                    onallo.Add(auto);
-                }
-            }
-            return onallo;
+            return autok.Where(x => x.vezetoiBeavatkozas == max).ToList();
         }
-        //static double fealdat9(List<Auto> autok)
-        //{
-        //    return autok.Min(x => x.GPSKoordinatak);
-        //}
-        static List<string> feladat10(List<Auto> autok)
+        static double f9(List<Auto> autok)
         {
-            List<Auto> automata = new List<Auto>();
-            foreach (var auto in autok)
+            double[] temp = new double[autok.Count];
+            for (int i = 0; i < autok.Count; i++)
             {
-                if (auto.aktualisVezetesiMod == "automatikus")
-                {
-                    automata.Add(auto);
-                }
+                temp[i] = autok[i].GPSKoordinatak[0];
             }
-            List<string> gyarto = new List<string>();
-            foreach (var auto in automata)
-            {
-                string[] temp = auto.gyartoModell.Split(" ");
-                gyarto.Add(temp[0]);
-            }
-            return gyarto;
+            return temp.Min();
         }
-        static string feladat11(List<Auto> autok)
+        static List<string> f10(List<Auto> autok)
+        {
+            List<string> automata = autok.Where(x => x.aktualisVezetesiMod == "automatikus").Select(x => x.gyartoModell).ToList();
+
+            for (int i = 0; i < automata.Count; i++)
+            {
+                string[] temp = automata[i].Split(" ");
+                automata[i] = temp[0];
+            }
+            automata = automata.Distinct().ToList();
+            automata.Sort();
+            return automata;
+        }
+        static string f11(List<Auto> autok)
         {
             string result = "";
             int szenzor = 0;
             foreach (var auto in autok)
             {
                 szenzor = auto.szenzorokListaja.Count();
-                if (szenzor >= 3 && auto.aktualisSebesseg >= 85 &&auto.aktualisSebesseg <= 95)
+                if (szenzor >= 3 && auto.aktualisSebesseg >= 85 && auto.aktualisSebesseg <= 95)
                 {
                     result += auto.id + ", ";
                 }
             }
             return result;
         }
-        static void feladat13(List<Auto> autok)
+        static void f13(List<Auto> autok)
         {
             using StreamWriter sr = new StreamWriter(@"..\..\..\src\kiiras.txt", false);
             foreach (var auto in autok)

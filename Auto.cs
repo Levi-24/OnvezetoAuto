@@ -24,13 +24,14 @@ namespace Onvezeto_Major_Levente
             this.SAESzint = d[1];
             this.aktualisSebesseg = int.Parse(d[2]);
             this.szenzorokListaja = d[3].Split(",");
-
-            //string[] parts = d[4].Split("|");
-            //for (int i = 0; i < parts.Length; i++)
-            //{
-            //    this.GPSKoordinatak = double.Parse(parts[i]);
-            //}
-
+            string[] parts = d[4].Split("|");
+            double[] gps = new double[2];
+            foreach (var item in parts)
+            {
+                gps[0] = double.Parse(parts[0]);
+                gps[1] = double.Parse(parts[1]);
+            }
+            this.GPSKoordinatak = gps;
             this.vezetoiBeavatkozas = int.Parse(d[5]);
             this.aktualisVezetesiMod = d[6];
             this.id = x;
@@ -49,11 +50,13 @@ namespace Onvezeto_Major_Levente
             {
                 szenzorok += szenzorokListaja[i] + ",";
             }
+
             string gps = "";
-            //for (int y = 0; y < GPSKoordinatak.Length; y++)
-            //{
-            //    gps += GPSKoordinatak[y] + ",";
-            ////}
+            for (int y = 0; y < GPSKoordinatak.Length; y++)
+            {
+                gps += GPSKoordinatak[y] + ",";
+            }
+
             return $"Gyártó és modell: {gyartoModell}, SAE szint: {SAESzint}, Aktuális sebesség: {aktualisSebesseg}, Szenzorok listája: {szenzorok}, GPS koordináták: {gps}, Vezetői beavatkozás: {vezetoiBeavatkozas}, Aktuális vezetési mód: {aktualisVezetesiMod};";
         }
     }
